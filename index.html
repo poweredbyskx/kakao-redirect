@@ -70,5 +70,17 @@
     <p>Наш сайт работает на локальном сервере и недоступен через VPN</p>
     <a href="https://kakao.com.tm" class="btn">Перейти в меню →</a>
   </div>
+  <script>
+  fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
+    .then(() => {
+      document.querySelector('.highlight').innerHTML = 
+        '✓ Сайт доступен! Нажмите кнопку ниже';
+      document.querySelector('.highlight').style.background = '#2ecc71';
+    })
+    .catch(() => {
+      document.querySelector('.highlight').innerHTML = 
+        '✗ Сайт недоступен — отключите VPN и обновите страницу';
+    });
+</script>
 </body>
 </html>
