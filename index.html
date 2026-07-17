@@ -1,3 +1,6 @@
+
+
+Index · HTML
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -17,58 +20,77 @@
     }
     .card {
       background: #652a29;
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 32px 24px;
-      max-width: 380px;
+      max-width: 340px;
       width: 100%;
       text-align: center;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
-    h1 {
-      color: #fff3bd;
-      font-size: 28px;
-      letter-spacing: 0.1em;
+    .logo {
+      width: 180px;
+      height: auto;
+      margin: 0 auto;
     }
-    p {
+    .subtitle {
       color: #fff3bd;
-      font-size: 15px;
-      line-height: 1.6;
-      opacity: 0.9;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-top: -12px;
     }
     .highlight {
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 14px;
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 15px;
       font-weight: 600;
-      line-height: 1.6;
+      line-height: 1.5;
       background: #fff3bd;
       color: #652a29;
       transition: background 0.3s, color 0.3s;
     }
     a.btn {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       background: #fff3bd;
       color: #652a29;
-      padding: 14px;
-      border-radius: 14px;
+      padding: 16px 20px;
+      border-radius: 50px;
       text-decoration: none;
       font-size: 18px;
       font-weight: 700;
-      margin-top: 8px;
+    }
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #652a29;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>КАКАО</h1>
-    <p>Кофе и Завтраки</p>
+    <img src="logo.png" alt="КАКАО" class="logo">
+    <p class="subtitle">Кофе и Завтраки</p>
     <div class="highlight">
       Проверяем доступность сайта...
     </div>
-    <p>Наш сайт работает на локальном сервере и недоступен через VPN</p>
-    <a href="https://kakao.com.tm" class="btn">Перейти в меню →</a>
+    <a href="https://kakao.com.tm" class="btn">
+      <span>Перейти в меню</span>
+      <span class="btn-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#652a29" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </a>
   </div>
   <script>
     function checkSite() {
@@ -89,3 +111,4 @@
   </script>
 </body>
 </html>
+ 
