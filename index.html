@@ -81,6 +81,22 @@
       document.querySelector('.highlight').innerHTML = 
         '✗ Сайт недоступен — отключите VPN и обновите страницу';
     });
+    function checkSite() {
+  fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
+    .then(() => {
+      document.querySelector('.highlight').innerHTML = '✓ Сайт доступен! Нажмите кнопку ниже';
+      document.querySelector('.highlight').style.background = '#2ecc71';
+      document.querySelector('.highlight').style.color = '#fff';
+    })
+    .catch(() => {
+      document.querySelector('.highlight').innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
+      document.querySelector('.highlight').style.background = '#fff3bd';
+      document.querySelector('.highlight').style.color = '#652a29';
+    });
+}
+
+checkSite();
+setInterval(checkSite, 1000);
 </script>
 </body>
 </html>
