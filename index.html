@@ -38,13 +38,14 @@
       opacity: 0.9;
     }
     .highlight {
-      background: #fff3bd;
-      color: #652a29;
       border-radius: 10px;
       padding: 12px 16px;
       font-size: 14px;
       font-weight: 600;
       line-height: 1.6;
+      background: #fff3bd;
+      color: #652a29;
+      transition: background 0.3s, color 0.3s;
     }
     a.btn {
       display: block;
@@ -64,39 +65,27 @@
     <h1>КАКАО</h1>
     <p>Кофе и Завтраки</p>
     <div class="highlight">
-      Если страница меню не открывается —<br>
-      отключите VPN и попробуйте снова
+      Проверяем доступность сайта...
     </div>
     <p>Наш сайт работает на локальном сервере и недоступен через VPN</p>
     <a href="https://kakao.com.tm" class="btn">Перейти в меню →</a>
   </div>
   <script>
-  fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
-    .then(() => {
-      document.querySelector('.highlight').innerHTML = 
-        '✓ Сайт доступен! Нажмите кнопку ниже';
-      document.querySelector('.highlight').style.background = '#2ecc71';
-    })
-    .catch(() => {
-      document.querySelector('.highlight').innerHTML = 
-        '✗ Сайт недоступен — отключите VPN и обновите страницу';
-    });
     function checkSite() {
-  fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
-    .then(() => {
-      document.querySelector('.highlight').innerHTML = '✓ Сайт доступен! Нажмите кнопку ниже';
-      document.querySelector('.highlight').style.background = '#2ecc71';
-      document.querySelector('.highlight').style.color = '#fff';
-    })
-    .catch(() => {
-      document.querySelector('.highlight').innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
-      document.querySelector('.highlight').style.background = '#fff3bd';
-      document.querySelector('.highlight').style.color = '#652a29';
-    });
-}
-
-checkSite();
-setInterval(checkSite, 1000);
-</script>
+      fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
+        .then(() => {
+          document.querySelector('.highlight').innerHTML = '✓ Сайт доступен! Нажмите кнопку ниже';
+          document.querySelector('.highlight').style.background = '#2ecc71';
+          document.querySelector('.highlight').style.color = '#fff';
+        })
+        .catch(() => {
+          document.querySelector('.highlight').innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
+          document.querySelector('.highlight').style.background = '#fff3bd';
+          document.querySelector('.highlight').style.color = '#652a29';
+        });
+    }
+    checkSite();
+    setInterval(checkSite, 3000);
+  </script>
 </body>
 </html>
