@@ -16,56 +16,60 @@
       padding: 20px;
     }
     .card {
-      background: #652a29;
-      border-radius: 24px;
+      background: #fff3bd;
+      border: 1.5px solid #652a29;
+      border-radius: 40px;
+      box-shadow: 0 4px 4px rgba(0,0,0,0.25);
       padding: 32px 24px;
-      max-width: 340px;
+      max-width: 350px;
       width: 100%;
-      text-align: center;
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 20px;
     }
     .logo {
-      width: 180px;
+      width: 100%;
       height: auto;
-      margin: 0 auto;
-    }
-    .subtitle {
-      color: #fff3bd;
-      font-size: 13px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      opacity: 0.85;
-      margin-top: -12px;
     }
     .highlight {
-      border-radius: 14px;
+      width: 100%;
+      border: 2px solid #9f2020;
+      border-radius: 10px;
       padding: 16px;
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 700;
       line-height: 1.5;
-      background: #fff3bd;
+      background: white;
       color: #652a29;
-      transition: background 0.3s, color 0.3s;
+      text-align: center;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     a.btn {
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
       background: #fff3bd;
       color: #652a29;
-      padding: 16px 20px;
-      border-radius: 50px;
+      padding: 12px 16px 12px 20px;
+      border-radius: 100px;
+      border: 1.5px solid #652a29;
       text-decoration: none;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
+      box-shadow: 0 4px 6px rgba(101,42,41,0.5);
     }
     .btn-icon {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      border: 2px solid #652a29;
+      background: white;
+      border: 1.5px solid #652a29;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -82,28 +86,37 @@
     <a href="https://kakao.com.tm" class="btn">
       <span>Перейти в меню</span>
       <span class="btn-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
           <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#652a29" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </span>
     </a>
   </div>
   <script>
-    function checkSite() {
-      fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
-        .then(() => {
-          document.querySelector('.highlight').innerHTML = '✓ Сайт доступен! Нажмите кнопку ниже';
-          document.querySelector('.highlight').style.background = '#2ecc71';
-          document.querySelector('.highlight').style.color = '#fff';
-        })
-        .catch(() => {
-          document.querySelector('.highlight').innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
-          document.querySelector('.highlight').style.background = '#fff3bd';
-          document.querySelector('.highlight').style.color = '#652a29';
-        });
-    }
-    checkSite();
-    setInterval(checkSite, 3000);
+    fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(3000) })
+      .then(() => {
+        window.location.href = 'https://kakao.com.tm';
+      })
+      .catch(() => {
+        const el = document.querySelector('.highlight');
+        el.innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
+
+        setInterval(function() {
+          fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
+            .then(() => {
+              el.innerHTML = '✓ Сайт доступен! Нажмите кнопку ниже';
+              el.style.background = '#2ecc71';
+              el.style.color = '#fff';
+              el.style.borderColor = '#2ecc71';
+            })
+            .catch(() => {
+              el.innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
+              el.style.background = 'white';
+              el.style.color = '#652a29';
+              el.style.borderColor = '#9f2020';
+            });
+        }, 3000);
+      });
   </script>
 </body>
 </html>
