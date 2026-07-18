@@ -29,7 +29,7 @@
       gap: 20px;
     }
     .logo {
-      width: 120%;
+      width: 100%;
       height: auto;
     }
     .highlight {
@@ -75,15 +75,27 @@
       justify-content: center;
       flex-shrink: 0;
     }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      15% { transform: translateX(-8px); }
+      30% { transform: translateX(8px); }
+      45% { transform: translateX(-6px); }
+      60% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
+      90% { transform: translateX(4px); }
+    }
+    .shake {
+      animation: shake 0.5s ease;
+    }
   </style>
 </head>
 <body>
   <div class="card">
     <img src="logo.png" alt="КАКАО" class="logo">
-    <div class="highlight">
+    <div class="highlight" id="status">
       Проверяем доступность сайта...
     </div>
-    <a href="https://kakao.com.tm" class="btn">
+    <a href="https://kakao.com.tm" class="btn" id="btn">
       <span>Перейти в меню</span>
       <span class="btn-icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -93,25 +105,55 @@
     </a>
   </div>
   <script>
-    function checkSite() {
-      fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
-        .then(() => {
-          const el = document.querySelector('.highlight');
-          el.innerHTML = '✓ Сайт доступен! Нажмите кнопку ниже';
-          el.style.background = '#2ecc71';
-          el.style.color = '#fff';
-          el.style.borderColor = '#2ecc71';
-        })
-        .catch(() => {
-          const el = document.querySelector('.highlight');
-          el.innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
-          el.style.background = 'white';
-          el.style.color = '#652a29';
-          el.style.borderColor = '#9f2020';
-        });
+    const el = document.getElementById('status');
+    const btn = document.getElementById('btn');
+    let siteAvailable = false;
+
+    function shake() {
+      el.classList.remove('shake');
+      void el.offsetWidth;
+      el.classList.add('shake');
     }
-    checkSite();
-    setInterval(checkSite, 3000);
+
+    function setUnavailable() {
+      siteAvailable = false;
+      el.innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
+      el.style.background = 'white';
+      el.style.color = '#652a29';
+      el.style.borderColor = '#9f2020';
+    }
+
+    function setAvailable() {
+      siteAvailable = true;
+      el.innerHTML = '✓ Сайт доступен! Нажмите кнопку ниже';
+      el.style.background = '#2ecc71';
+      el.style.color = '#fff';
+      el.style.borderColor = '#2ecc71';
+    }
+
+    // Клик на кнопку — если сайт недоступен, трясём блок статуса
+    btn.addEventListener('click', function(e) {
+      if (!siteAvailable) {
+        e.preventDefault();
+        shake();
+      }
+    });
+
+    // При загрузке — редирект если сайт доступен
+    fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(3000) })
+      .then(() => {
+        window.location.href = 'https://kakao.com.tm';
+      })
+      .catch(() => {
+        setUnavailable();
+
+        // Периодическая проверка каждые 3 секунды
+        setInterval(() => {
+          fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
+            .then(() => setAvailable())
+            .catch(() => setUnavailable());
+        }, 3000);
+      });
   </script>
 </body>
 </html>
