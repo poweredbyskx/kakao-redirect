@@ -8,7 +8,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: sans-serif;
-      background: #fff3bd;
+      background: #ffffff;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -29,7 +29,7 @@
       gap: 20px;
     }
     .logo {
-      width: 100%;
+      width: 120%;
       height: auto;
     }
     .highlight {
@@ -93,30 +93,25 @@
     </a>
   </div>
   <script>
-    fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(3000) })
-      .then(() => {
-        window.location.href = 'https://kakao.com.tm';
-      })
-      .catch(() => {
-        const el = document.querySelector('.highlight');
-        el.innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
-
-        setInterval(function() {
-          fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
-            .then(() => {
-              el.innerHTML = '✓ Сайт доступен! Нажмите кнопку ниже';
-              el.style.background = '#2ecc71';
-              el.style.color = '#fff';
-              el.style.borderColor = '#2ecc71';
-            })
-            .catch(() => {
-              el.innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
-              el.style.background = 'white';
-              el.style.color = '#652a29';
-              el.style.borderColor = '#9f2020';
-            });
-        }, 3000);
-      });
+    function checkSite() {
+      fetch('https://kakao.com.tm', { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
+        .then(() => {
+          const el = document.querySelector('.highlight');
+          el.innerHTML = '✓ Сайт доступен! Нажмите кнопку ниже';
+          el.style.background = '#2ecc71';
+          el.style.color = '#fff';
+          el.style.borderColor = '#2ecc71';
+        })
+        .catch(() => {
+          const el = document.querySelector('.highlight');
+          el.innerHTML = '✗ Сайт недоступен — отключите VPN и обновите страницу';
+          el.style.background = 'white';
+          el.style.color = '#652a29';
+          el.style.borderColor = '#9f2020';
+        });
+    }
+    checkSite();
+    setInterval(checkSite, 3000);
   </script>
 </body>
 </html>
